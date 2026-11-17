@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 
 const eventDate = new Date("2026-12-05T11:00:00+04:00");
 // Change this to the hosts' WhatsApp number, including country code and digits only.
-const WHATSAPP_NUMBER = "9100000000000";
+const WHATSAPP_NUMBER = "918921022071";
 type Countdown = { days: number; hours: string; minutes: string; seconds: string };
 const emptyCountdown: Countdown = { days: 0, hours: "00", minutes: "00", seconds: "00" };
 
