@@ -31,7 +31,8 @@ export default function ThreeBond({ active }: ThreeBondProps) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(32, 1.8, 0.1, 50);
-    camera.position.set(0, 0.05, 7);
+    camera.position.set(0, 2.55, 7);
+    camera.lookAt(0, 0.28, 0);
 
     scene.add(new THREE.HemisphereLight(0xfff3d5, 0x4b3111, 2.1));
     const keyLight = new THREE.DirectionalLight(0xffe2a0, 3.8);
@@ -47,8 +48,6 @@ export default function ThreeBond({ active }: ThreeBondProps) {
     const leftRing = new THREE.Group();
     const rightRing = new THREE.Group();
     scene.add(leftRing, rightRing);
-    leftRing.rotation.set(Math.PI / 2 - 0.22, -0.08, -0.05);
-    rightRing.rotation.set(Math.PI / 2 - 0.22, 0.08, 0.05);
 
     let disposed = false;
     const loadedScenes: THREE.Object3D[] = [];
@@ -103,31 +102,31 @@ export default function ThreeBond({ active }: ThreeBondProps) {
 
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const progress = THREE.MathUtils.clamp(window.scrollY / maxScroll, 0, 1);
-      const descent = THREE.MathUtils.smoothstep(progress, 0, 0.94);
-      const separation = THREE.MathUtils.lerp(1.55, 0.82, descent);
+      const descent = THREE.MathUtils.smoothstep(progress, 0.04, 0.94);
+      const separation = THREE.MathUtils.lerp(1.72, 1.02, descent);
       const impact = progress > 0.86
-        ? Math.sin(((progress - 0.86) / 0.14) * Math.PI) * (1 - progress) * 1.4
+        ? Math.sin(((progress - 0.86) / 0.14) * Math.PI) * (1 - progress) * 1.8
         : 0;
 
       leftRing.position.set(
         -separation,
-        THREE.MathUtils.lerp(0.78, 0.015, descent) + impact,
-        THREE.MathUtils.lerp(0.38, 0.16, descent),
+        THREE.MathUtils.lerp(1.35, 0, descent) + impact,
+        THREE.MathUtils.lerp(0.24, 0.08, descent),
       );
       rightRing.position.set(
         separation,
-        THREE.MathUtils.lerp(1.18, -0.015, descent) - impact * 0.72,
-        THREE.MathUtils.lerp(-0.38, -0.16, descent),
+        THREE.MathUtils.lerp(1.88, 0, descent) - impact * 0.72,
+        THREE.MathUtils.lerp(-0.22, -0.08, descent),
       );
       leftRing.rotation.set(
-        THREE.MathUtils.lerp(Math.PI / 2 - 0.72, Math.PI / 2 - 0.14, descent),
-        THREE.MathUtils.lerp(-0.95, -0.15, descent),
-        THREE.MathUtils.lerp(-0.48, -0.06, descent),
+        THREE.MathUtils.lerp(-0.68, 0, descent),
+        THREE.MathUtils.lerp(-Math.PI * 2.15, 0, descent),
+        THREE.MathUtils.lerp(-0.46, 0, descent),
       );
       rightRing.rotation.set(
-        THREE.MathUtils.lerp(Math.PI / 2 - 0.5, Math.PI / 2 + 0.14, descent),
-        THREE.MathUtils.lerp(0.95, 0.15, descent),
-        THREE.MathUtils.lerp(0.48, 0.06, descent),
+        THREE.MathUtils.lerp(0.62, 0, descent),
+        THREE.MathUtils.lerp(Math.PI * 2.35, 0, descent),
+        THREE.MathUtils.lerp(0.4, 0, descent),
       );
       renderer.render(scene, camera);
     }
