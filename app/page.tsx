@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import ThreeBond from "./three-bond";
 import { ArrowDown, ArrowUp, CalendarPlus, CalendarDays, Clock3, MapPin, MessageCircle, Music2, VolumeX, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 
@@ -72,15 +73,14 @@ export default function InvitationPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const fullName = String(data.get("name") ?? "").trim();
-    const guests = String(data.get("guests") ?? "1");
     const phone = String(data.get("phone") ?? "").trim();
     const dua = String(data.get("message") ?? "").trim();
     setGuestName(fullName.split(/\s+/)[0]);
     setThankMessage(attending
-      ? `We’re delighted you’ll join us with ${guests} guest${guests === "1" ? "" : "s"}. Thank you for your duas.`
+      ? "We’re delighted you’ll join us. Thank you for your duas."
       : "We’re grateful for your reply and your duas. You’ll be with us in spirit.");
     const rsvpMessage = attending
-      ? `Assalamu alaikum!\nMy name is ${fullName}.\nInshaAllah, I will attend the Nikkah of Mohammed Rihab & Tafzeena on Saturday, December 5, 2026 at 11:00 AM.\nNumber of guests: ${guests}.${phone ? `\nMy phone/WhatsApp: ${phone}.` : ""}${dua ? `\nDua/message: ${dua}` : ""}`
+      ? `Assalamu alaikum!\nMy name is ${fullName}.\nInshaAllah, I will attend the Nikkah of Mohammed Rihab & Tafzeena on Saturday, December 5, 2026 at 11:00 AM.${phone ? `\nMy phone/WhatsApp: ${phone}.` : ""}${dua ? `\nDua/message: ${dua}` : ""}`
       : `Assalamu alaikum!\nMy name is ${fullName}.\nI’m unable to attend the Nikkah of Mohammed Rihab & Tafzeena on Saturday, December 5, 2026, but I’m sending my duas.${phone ? `\nMy phone/WhatsApp: ${phone}.` : ""}${dua ? `\nDua/message: ${dua}` : ""}`;
     setWhatsappUrl(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(rsvpMessage)}`);
     setSubmitted(true);
@@ -89,6 +89,7 @@ export default function InvitationPage() {
 
   return <>
     <audio ref={audioRef} loop preload="none" src="/nasheed.mp3" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+    <ThreeBond active={coverOpen} />
     <button className="audio-toggle" type="button" onClick={toggleAudio} aria-label={playing ? "Mute background nasheed" : "Play background nasheed"} title={playing ? "Mute nasheed" : "Play nasheed"}>
       {playing ? <VolumeX size={16} aria-hidden="true" /> : <Music2 size={16} aria-hidden="true" />}<span>{playing ? "Mute" : "Play"}</span>
     </button>
@@ -138,7 +139,6 @@ export default function InvitationPage() {
             <label className="choice"><input type="radio" name="attendance" value="yes" checked={attending} onChange={() => setAttending(true)} required /><span><b>Joyfully attending</b><small>We look forward to seeing you</small></span></label>
             <label className="choice"><input type="radio" name="attendance" value="no" checked={!attending} onChange={() => setAttending(false)} /><span><b>Unable to attend</b><small>Sending our duas</small></span></label>
           </div></fieldset>
-          {attending && <label className="field guest-count">Number of guests<select name="guests" defaultValue="1"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>}
           <label className="field">A dua or message <small>Optional</small><textarea name="message" rows={3} placeholder="Share a kind wish with the couple…" /></label>
           <button className="button button-green submit-button" type="submit">Send your reply <span>→</span></button>
           <p className="form-note">Next, open WhatsApp and tap Send to share your prefilled RSVP with the hosts.</p>
