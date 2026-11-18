@@ -12,6 +12,7 @@ export default function ThreeBond({ active }: ThreeBondProps) {
   useEffect(() => {
     const host = hostRef.current;
     if (!active || !host) return;
+    const hostElement = host as HTMLDivElement;
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -85,7 +86,7 @@ export default function ThreeBond({ active }: ThreeBondProps) {
         loadedScenes.push(model);
         scheduleRender();
       }, undefined, () => {
-        if (!disposed) host.dataset.modelError = "true";
+        if (!disposed) hostElement.dataset.modelError = "true";
       });
     }
 
@@ -136,7 +137,7 @@ export default function ThreeBond({ active }: ThreeBondProps) {
     }
 
     function resize() {
-      const bounds = host.getBoundingClientRect();
+      const bounds = hostElement.getBoundingClientRect();
       width = Math.max(1, bounds.width);
       height = Math.max(1, bounds.height);
       renderer.setSize(width, height, false);
@@ -146,7 +147,7 @@ export default function ThreeBond({ active }: ThreeBondProps) {
     }
 
     const resizeObserver = new ResizeObserver(resize);
-    resizeObserver.observe(host);
+    resizeObserver.observe(hostElement);
     window.addEventListener("resize", resize, { passive: true });
     window.addEventListener("scroll", scheduleRender, { passive: true });
     resize();
