@@ -2,12 +2,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import ThreeBond from "./three-bond";
-import { ArrowDown, ArrowUp, CalendarPlus, CalendarDays, Clock3, MapPin, MessageCircle, Music2, VolumeX, Sparkles } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { ArrowDown, ArrowUp, CalendarPlus, CalendarDays, Clock3, MapPin, Music2, VolumeX, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const eventDate = new Date("2026-12-05T11:00:00+04:00");
-// Change this to the hosts' WhatsApp number, including country code and digits only.
-const WHATSAPP_NUMBER = "918921022071";
 type Countdown = { days: number; hours: string; minutes: string; seconds: string };
 const emptyCountdown: Countdown = { days: 0, hours: "00", minutes: "00", seconds: "00" };
 
@@ -29,11 +27,6 @@ export default function InvitationPage() {
   const [coverOpen, setCoverOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [countdown, setCountdown] = useState(emptyCountdown);
-  const [attending, setAttending] = useState(true);
-  const [guestName, setGuestName] = useState("");
-  const [thankMessage, setThankMessage] = useState("");
-  const [whatsappUrl, setWhatsappUrl] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     setCountdown(getCountdown());
@@ -67,24 +60,6 @@ export default function InvitationPage() {
     ].join("\r\n");
     const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
     const link = document.createElement("a"); link.href = url; link.download = "rihab-tafzeena-nikkah.ics"; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
-  }
-
-  function submitRsvp(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const fullName = String(data.get("name") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const dua = String(data.get("message") ?? "").trim();
-    setGuestName(fullName.split(/\s+/)[0]);
-    setThankMessage(attending
-      ? "We’re delighted you’ll join us. Thank you for your duas."
-      : "We’re grateful for your reply and your duas. You’ll be with us in spirit.");
-    const rsvpMessage = attending
-      ? `Assalamu alaikum!\nMy name is ${fullName}.\nInshaAllah, I will attend the Nikkah of Mohammed Rihab & Tafzeena on Saturday, December 5, 2026 at 11:00 AM.${phone ? `\nMy phone/WhatsApp: ${phone}.` : ""}${dua ? `\nDua/message: ${dua}` : ""}`
-      : `Assalamu alaikum!\nMy name is ${fullName}.\nI’m unable to attend the Nikkah of Mohammed Rihab & Tafzeena on Saturday, December 5, 2026, but I’m sending my duas.${phone ? `\nMy phone/WhatsApp: ${phone}.` : ""}${dua ? `\nDua/message: ${dua}` : ""}`;
-    setWhatsappUrl(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(rsvpMessage)}`);
-    setSubmitted(true);
-    window.setTimeout(() => document.getElementById("thankYou")?.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
   }
 
   return <>
@@ -130,20 +105,6 @@ export default function InvitationPage() {
         </Reveal>
       </section>
 
-      <section className="rsvp section-pad" id="rsvp">
-        <Reveal className="section-heading"><p className="eyebrow">Kindly reply</p><h2>Will you join us?</h2><p className="rsvp-intro">Your answer helps us prepare for a day made brighter by your presence.</p></Reveal>
-        {!submitted ? <Reveal className="rsvp-form-wrap"><form className="rsvp-form" onSubmit={submitRsvp}>
-          <label className="field">Your full name <span>*</span><input name="name" autoComplete="name" required placeholder="e.g. Amina Khan" /></label>
-          <label className="field">Phone / WhatsApp <small>Optional</small><input name="phone" type="tel" autoComplete="tel" placeholder="Your number" /></label>
-          <fieldset className="attendance"><legend>Will you be attending? <span>*</span></legend><div className="choice-grid">
-            <label className="choice"><input type="radio" name="attendance" value="yes" checked={attending} onChange={() => setAttending(true)} required /><span><b>Joyfully attending</b><small>We look forward to seeing you</small></span></label>
-            <label className="choice"><input type="radio" name="attendance" value="no" checked={!attending} onChange={() => setAttending(false)} /><span><b>Unable to attend</b><small>Sending our duas</small></span></label>
-          </div></fieldset>
-          <label className="field">A dua or message <small>Optional</small><textarea name="message" rows={3} placeholder="Share a kind wish with the couple…" /></label>
-          <button className="button button-green submit-button" type="submit">Send your reply <span>→</span></button>
-          <p className="form-note">Next, open WhatsApp and tap Send to share your prefilled RSVP with the hosts.</p>
-        </form></Reveal> : <div className="thank-you" id="thankYou" aria-live="polite"><span className="thank-icon">✦</span><p className="eyebrow">With gratitude</p><h3>Thank you, {guestName}</h3><p>{thankMessage}</p><a className="button button-green whatsapp-button" href={whatsappUrl} target="_blank" rel="noreferrer"><MessageCircle size={16} aria-hidden="true" /> Continue in WhatsApp</a><p className="form-note">WhatsApp opens with your RSVP filled in. Tap Send there to share it with the hosts.</p><p className="closing arabic" lang="ar" dir="rtl">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p><p className="closing-translation">May Allah bless you both, shower His blessings upon you, and unite you in goodness.</p></div>}
-      </section>
     </main>
     <footer><span className="footer-monogram">R <i>&amp;</i> T</span><p>Made with love, in gratitude to Allah.</p><a href="#home">Back to top <ArrowUp size={13} aria-hidden="true" /></a></footer>
 
