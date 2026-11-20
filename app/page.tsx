@@ -54,12 +54,12 @@ export default function InvitationPage() {
 
   function addToCalendar() {
     const ics = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Rihab and Tafzeena//Nikkah//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Rihab and Tafneena Jahana//Nikkah//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
       "UID:rihab-tafzeena-nikkah-20261205", "DTSTAMP:20260101T000000Z", "DTSTART;TZID=Asia/Dubai:20261205T110000", "DTEND;TZID=Asia/Dubai:20261205T140000",
-      "SUMMARY:Nikkah Ceremony — Mohammed Rihab & Tafzeena", "LOCATION:Four Seasons Auditorium\\, Kaithakunda", "DESCRIPTION:Join us to celebrate the Nikkah of Mohammed Rihab and Tafzeena.", "END:VEVENT", "END:VCALENDAR",
+      "SUMMARY:Nikkah Ceremony — Mohammed Rihab & Tafneena Jahana", "LOCATION:Four Seasons Auditorium\\, Kaithakunda", "DESCRIPTION:Join us to celebrate the Nikkah of Mohammed Rihab and Tafneena Jahana.", "END:VEVENT", "END:VCALENDAR",
     ].join("\r\n");
     const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-    const link = document.createElement("a"); link.href = url; link.download = "rihab-tafzeena-nikkah.ics"; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
+    const link = document.createElement("a"); link.href = url; link.download = "rihab-tafneena-jahana-nikkah.ics"; document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(url);
   }
 
   return <>
@@ -76,7 +76,7 @@ export default function InvitationPage() {
           <p className="eyebrow">A celebration of love &amp; faith</p>
           <p className="arabic bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
           <p className="invitation-copy">With joyful hearts and gratitude to Allah (SWT),<br className="desktop-only" /> we invite you to bless and celebrate the Nikkah of</p>
-          <h1 id="couple-names"><span>Mohammed Rihab</span><i aria-hidden="true">&amp;</i><span>Tafzeena</span></h1>
+          <h1 id="couple-names"><span>Mohammed Rihab</span><i aria-hidden="true">&amp;</i><span>Tafneena Jahana</span></h1>
           <div className="gold-rule"><span>✦</span></div>
           <p className="hero-date">Saturday <span>·</span> December 5, 2026 <span>·</span> 11:00 AM</p>
           <p className="hero-venue">Four Seasons Auditorium <span>—</span> Kaithakunda</p>
@@ -88,7 +88,7 @@ export default function InvitationPage() {
       <section className="blessing section-pad" id="blessing">
         <p className="eyebrow">A verse on companionship</p>
         <Reveal className="mihrab"><div className="mihrab-inner"><Sparkles className="ornament" size={22} aria-hidden="true" /><p className="arabic verse" lang="ar" dir="rtl">وَخَلَقْنَاكُمْ أَزْوَاجًا</p><p className="translation">“And We created you in pairs.”</p><p className="reference">SURAH AN-NABA · 78:8</p></div></Reveal>
-        <Reveal className="blessing-note">As two hearts become one in the sacred bond of Nikkah, your presence and duas would mean the world to us. Please join Mohammed Rihab and Tafzeena as they begin their journey together.</Reveal>
+        <Reveal className="blessing-note">As two hearts become one in the sacred bond of Nikkah, your presence and duas would mean the world to us. Please join Mohammed Rihab and Tafneena Jahana as they begin their journey together.</Reveal>
       </section>
 
       <section className="details section-pad" id="details">
@@ -111,7 +111,7 @@ export default function InvitationPage() {
     <AnimatePresence>
       {!coverOpen && <motion.section className="envelope-screen" aria-label="Invitation cover" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.04, transition: { duration: 0.8, ease: "easeInOut" } }}>
         <motion.div className="envelope-card" initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.7, ease: "easeOut" }}>
-          <div className="envelope-pattern" /><p className="eyebrow">In the name of Allah</p><p className="arabic cover-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div className="cover-monogram">R <i>&amp;</i> T</div><p className="cover-label">Together with their families</p><h2>Mohammed Rihab<br /><i>&amp;</i><br />Tafzeena</h2><p className="cover-invite">request the pleasure of your company<br />at their Nikkah ceremony</p><p className="cover-date">SATURDAY · DECEMBER 5, 2026</p><motion.button className="open-button" id="openInvitation" onClick={openInvitation} type="button" whileTap={{ scale: 0.97 }}>Open your invitation <span><ArrowDown size={15} aria-hidden="true" /></span></motion.button>
+          <div className="envelope-pattern" /><p className="eyebrow">In the name of Allah</p><p className="arabic cover-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div className="cover-monogram">R <i>&amp;</i> T</div><p className="cover-label">Together with their families</p><h2>Mohammed Rihab<br /><i>&amp;</i><br />Tafneena Jahana</h2><p className="cover-invite">request the pleasure of your company<br />at their Nikkah ceremony</p><p className="cover-date">SATURDAY · DECEMBER 5, 2026</p><motion.button className="open-button" id="openInvitation" onClick={openInvitation} type="button" whileTap={{ scale: 0.97 }}>Open your invitation <span><ArrowDown size={15} aria-hidden="true" /></span></motion.button>
         </motion.div>
       </motion.section>}
     </AnimatePresence>
